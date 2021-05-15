@@ -1,11 +1,13 @@
 // router.js
 
 export const router = {};
+const body = document.querySelector("body");
 
+const titleLabel = document.querySelector("header h1")
 /**
  * Changes the "page" (state) that your SPA app is currently set to
  */
-router.setState = function() {
+router.setState = function(state) {
   /**
    * - There are three states that your SPA app will have
    *    1. The home page
@@ -35,4 +37,56 @@ router.setState = function() {
    *    1. You may add as many helper functions in this file as you like
    *    2. You may modify the parameters of setState() as much as you like
    */
+
+    body.className = state;
+    if (state === "") {
+        window.history.pushState({page: state}, "Journal Entries", "/");
+        titleLabel.innerHTML = "Journal Entries";
+    } else if (state.includes("entry")) {
+
+        let id =  body.className.slice(5);
+        window.history.pushState({page: state}, "Entry " + id, "#Entry" + id);
+
+        body.className = "single-entry";
+
+        //delete then add new
+        body.removeChild(document.querySelector("entry-page"));
+
+        let entries = document.querySelectorAll("main journal-entry");
+        let singleEntryPage = document.createElement("entry-page");
+        titleLabel.innerHTML = "Entry " + id;
+
+        singleEntryPage.entry = entries[id].entry
+        body.appendChild(singleEntryPage);
+
+    } else {
+        titleLabel.innerHTML = state;
+        window.history.pushState({page: state}, state, state);
+
+    }
+   
+
+    // titleLabel.innerHTML = body.className;
+
+    // if (body.className.includes("#entry")) {
+    //     let id =  body.className.slice(5);
+    //     titleLabel.innerHTML = "Entry " + id;
+
+    //     body.className = "single-entry";
+
+    //     //delete then add new
+    //     body.removeChild(document.querySelector("entry-page"));
+
+    //     let entries = document.querySelectorAll("main journal-entry");
+    //     let singleEntryPage = document.createElement("entry-page");
+
+
+    //     singleEntryPage.entry = entries[id].entry
+    //     body.appendChild(singleEntryPage);
+
+    // } else if (body.className == "") {
+    //   titleLabel.innerHTML = "Journal Entries";
+    //   window.history.pushState({page: state}, " ", "/");
+    // }
+
 }
