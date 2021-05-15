@@ -40,13 +40,29 @@ router.setState = function(state) {
 
     body.className = state;
     if (state === "") {
+        titleLabel.innerHTML = "Journal Entries";
         window.history.pushState({page: state}, "Journal Entries", "/");
+    } else if (state.includes("entry")) {
+        let id =  body.className.slice(5);
+        let index  = parseInt(id) + 1;
+        window.history.pushState({page: state}, "Entry " + (index), "#Entry" + (index));
+        body.className = "single-entry";
+        gotoPage(state);
+
+    } else {
+        titleLabel.innerHTML = state;
+        window.history.pushState({page: state}, state, state);
+    }
+}
+
+export function gotoPage(state) {
+    if (state === "") {
+        body.className = state;
         titleLabel.innerHTML = "Journal Entries";
     } else if (state.includes("entry")) {
 
-        let id =  body.className.slice(5);
-        window.history.pushState({page: state}, "Entry " + id, "#Entry" + id);
-
+        let id =  state.slice(5);
+        let index  = parseInt(id) + 1;
         body.className = "single-entry";
 
         //delete then add new
@@ -54,39 +70,12 @@ router.setState = function(state) {
 
         let entries = document.querySelectorAll("main journal-entry");
         let singleEntryPage = document.createElement("entry-page");
-        titleLabel.innerHTML = "Entry " + id;
+        titleLabel.innerHTML = "Entry " + (index);
 
         singleEntryPage.entry = entries[id].entry
         body.appendChild(singleEntryPage);
-
     } else {
+        body.className = state;
         titleLabel.innerHTML = state;
-        window.history.pushState({page: state}, state, state);
-
     }
-   
-
-    // titleLabel.innerHTML = body.className;
-
-    // if (body.className.includes("#entry")) {
-    //     let id =  body.className.slice(5);
-    //     titleLabel.innerHTML = "Entry " + id;
-
-    //     body.className = "single-entry";
-
-    //     //delete then add new
-    //     body.removeChild(document.querySelector("entry-page"));
-
-    //     let entries = document.querySelectorAll("main journal-entry");
-    //     let singleEntryPage = document.createElement("entry-page");
-
-
-    //     singleEntryPage.entry = entries[id].entry
-    //     body.appendChild(singleEntryPage);
-
-    // } else if (body.className == "") {
-    //   titleLabel.innerHTML = "Journal Entries";
-    //   window.history.pushState({page: state}, " ", "/");
-    // }
-
 }

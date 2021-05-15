@@ -1,6 +1,6 @@
 // script.js
 
-import { router } from './router.js'; // Router imported so you can use it to manipulate your SPA app here
+import { router, gotoPage } from './router.js'; // Router imported so you can use it to manipulate your SPA app here
 const setState = router.setState;
 
 // Make sure you register your service worker here too
@@ -20,6 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+window.addEventListener('popstate', (e) => {
+  let state = e.state.page
+  gotoPage(state)
+});
 // click setting button
 document.querySelector("header img").onclick = e => {
   setState("settings");
