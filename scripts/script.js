@@ -3,19 +3,19 @@
 import { router, gotoPage } from './router.js'; // Router imported so you can use it to manipulate your SPA app here
 const setState = router.setState;
 
-// Make sure you register your service worker here too
+// Make sure you register your service worker here too -- check build page
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js').then(function(registration) {
-      // Registration was successful
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    }, function(err) {
-      // registration failed :(
-      console.log('ServiceWorker registration failed: ', err);
-    });
-  });
-}
+// if ('serviceWorker' in navigator) {
+//   window.addEventListener('load', function() {
+//     navigator.serviceWorker.register('/sw.js').then(function(registration) {
+//       // Registration was successful
+//       console.log('ServiceWorker registration successful with scope: ', registration.scope);
+//     }, function(err) {
+//       // registration failed :(
+//       console.log('ServiceWorker registration failed: ', err);
+//     });
+//   });
+// }
 
 //Service worker registration ^
 
@@ -35,8 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('popstate', (e) => {
-  let state = e.state.page
-  gotoPage(state)
+  if (e.state == null) {
+    setState("");
+  } else {
+    let state = e.state.page
+    gotoPage(state)
+  }
 });
 // click setting button
 document.querySelector("header img").onclick = e => {
