@@ -41,7 +41,7 @@ router.setState = function(state) {
     body.className = state;
     if (state === "") {
         titleLabel.innerHTML = "Journal Entries";
-        window.history.pushState({page: state}, "Journal Entries", "/");
+        window.history.pushState({page: state}, "Journal Entries", "./");
     } else if (state.includes("entry")) {
         let id =  body.className.slice(5);
         let index  = parseInt(id) + 1;
