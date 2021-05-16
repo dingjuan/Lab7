@@ -36,10 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 window.addEventListener('popstate', (e) => {
   if (e.state == null) {
-    setState("");
+      setState("");
   } else {
-    let state = e.state.page
-    gotoPage(state)
+      let state = e.state.page
+      gotoPage(state)
   }
 });
 // click setting button
