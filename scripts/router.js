@@ -48,7 +48,6 @@ router.setState = function(state) {
         window.history.pushState({page: state}, "Entry " + (index), "#Entry" + (index));
         body.className = "single-entry";
         gotoPage(state);
-
     } else {
         titleLabel.innerHTML = state;
         window.history.pushState({page: state}, state, state);
